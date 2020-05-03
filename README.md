@@ -10,7 +10,8 @@
 * pip install -r requirements.txt (업데이트예정)
 
 ### path
-* Crawling_driver_path : __Users\Gwanghwamun_Suggestion\chromedriver.exe__
+* Crawling_driver_path : sys.argv[1] (__Users\chromedriver.exe__)
+* Analysis_path : 업데이트예정
 
 ### 데이터출처
 * 광화문1번가(https://www.gwanghwamoon1st.go.kr/front/main/index.do)
