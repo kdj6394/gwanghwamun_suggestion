@@ -1,5 +1,6 @@
 from lib import os,glob,sys,join,basename,dirname
 from lib import np,pd,plt,sns
+from lib import WordCloud,Image,ImageColorGenerator,Komoran,nltk
 plt.rc('font',family='Malgun Gothic')
 
 
@@ -71,7 +72,6 @@ if __name__ == '__main__':
     plt.xlabel('생성날짜목록')
     plt.ylabel('청원횟수')
     plt.title('생성날짜목록 별 청원횟수',fontsize=15)
-    plt.grid()
     plt.plot(date_df_count['생성날짜목록'],date_df_count['청원횟수'],'-',label='청원횟수')
     plt.xticks(fontsize=7,rotation=65)
     for i,v in enumerate(date_df_count['청원횟수']):
@@ -97,3 +97,75 @@ if __name__ == '__main__':
         2020-04-01   120
         2020-04-04    48
     '''
+
+    like_df = pd.DataFrame(data['좋아요수'])
+    unique_list = like_df['좋아요수'].unique()
+    value = like_df['좋아요수'].value_counts()
+    like_df_count = like_df['좋아요수'].value_counts().rename_axis('좋아요수목록').reset_index(name='빈도')
+    like_df_count = like_df_count.sort_values(by=['좋아요수목록'], ascending = True).reset_index()
+
+    print(like_df_count)
+    plt.figure(figsize=(15,8))
+    plt.xlabel('좋아요수목록')
+    plt.ylabel('빈도')
+    plt.title('좋아요수목록 별 빈도',fontsize=15)
+    plt.scatter(like_df_count['좋아요수목록'],like_df_count['빈도'],label='빈도')
+    plt.grid()
+    plt.draw()
+    fig = plt.gcf()
+    fig.savefig(join(img_save_root,'좋아요수.png'),dpi=fig.dpi)
+
+    '''
+    대부분의 좋아요는 0, 좋아요가 0 인것을 제외하고 그래프를 생성했지만 특별히 다른점이 나타지 않음.    like_df_count = like_df_count.drop(index=0)
+    좋아요수가 100이상의 좋아요를 받은목록은 아래와 같다.
+    
+    구분  진행상황        생성날짜                   ID  좋아요수                                                 제목                                                 내용
+    229   보건의료   숙성중  2020-04-26  kakao20200413182156   122        트럼프의 ‘살균제 주입 치료’ 충격 발언에 대해 임상조사 검토를 요청 합니다.  ['위사진은 어느분 SNS 캡쳐 사진.https://news.naver.com/ma...
+    393   사회복지   숙성중  2020-03-31  naver20200331202522   119                              [코로나 19 이후 민생회복 아이디어]  ['', '돌봄을 지자체로 이관시켜주세요돌봄 지자체 이관시 장점에 
+    대하여 말씀드립니...
+    401   사회복지   숙성중  2020-03-31  naver20200331202522   119                              [코로나 19 이후 민생회복 아이디어]  ['', '돌봄을 지자체로 이관시켜주세요돌봄 지자체 이관시 장점에 
+    대하여 말씀드립니...
+    834   보건의료  숙성종료  2019-12-27                  난다율   757            [2020정부혁신제안이벤트응모] 난임부부들의 「임신을 위한 지원 확대」  ['▶제안이유‘17년 10월부터 건강보험을 적용된
+    난임치료 시술은, 도입한지 2년 ...
+    865   보건의료  숙성종료  2019-12-18                  난다율   163                              난임부부들의 「임신을 위한 지원 확대」  ['▶제안이유‘17년 10월부터 건강보험을 적용된 난임치료  
+    시술은, 도입한지 2년 ...
+    1439    기타   숙성중  2019-03-18                 사필귀정   134  개인회생 변제기간 단축을 서울만 시행하고 지방은 차별하여 시행하지 않는 법이 어디있...  ['▶제안이유', "▶제안내용정성호 의원이
+    발의, 변제기간 3년 단축을 적용한 「채...
+    1447    기타   숙성중  2019-03-18                 사필귀정   134  개인회생 변제기간 단축을 서울만 시행하고 지방은 차별하여 시행하지 않는 법이 어디있...  ['▶제안이유', "▶제안내용정성호 의원이
+    발의, 변제기간 3년 단축을 적용한 「채...
+    1448    기타   숙성중  2019-03-17                  소확행   164                                     개인회생 기간단축 소급적용  ['▶제안이유', '▶제안내용대한민국 헌법이 전국 국민에게 해당되듯
+    이,개인회생 기간...
+    1612    기타   숙성중  2019-01-31                  NaN   103                                       개인회생단축소급지역차별  ['▶제안이유', '▶제안내용개인회생 단축소급 적용이 왜 법원마다 다른
+    지 당최 이해...
+    '''
+
+
+
+    text_df = pd.DataFrame(data['내용'])
+    text_data = str(np.array(text_df['내용'].tolist()))
+    stop = set()
+    stop.update(['인','것','다','수','중','안','이','한','등'])
+    komoran = Komoran() 
+    text_data = komoran.nouns(text_data)
+
+    text_data = [each_word for each_word in text_data if each_word not in stop]
+    text_data = nltk.Text(text_data)
+    text_data = text_data.vocab().most_common(100)
+
+    print(text_data)
+    text_data = dict(text_data)
+    kore_mask = np.array(Image.open(r'C:\Users\82104\Documents\GitHub\Gwanghwamun_Suggestion\setting\korea.png'))
+
+    word = WordCloud(width=500,height=1000,min_font_size=20,max_font_size=200,
+            font_path=r'C:\Users\82104\Documents\GitHub\Gwanghwamun_Suggestion\setting\NanumSquareRoundL.ttf',
+            background_color=(90,90,90),mask=kore_mask,colormap='Blues').generate_from_frequencies(text_data)
+
+    plt.figure()
+    plt.axis('off')
+    plt.margins(x=0,y=0)
+    plt.imshow(word,interpolation="bilinear")
+    plt.draw()
+    fig = plt.gcf()
+    fig.savefig(join(img_save_root,'Word_Cloud.png'),dpi=fig.dpi)
+
+    # plt.show()

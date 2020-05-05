@@ -8,6 +8,7 @@
 
 ### requirements
 * pip install -r requirements.txt (업데이트예정)
+* KoNLPy - 설치참고(https://konlpy.org/ko/latest/install/)
 
 ### path
 * Crawling_driver_path : sys.argv[1] (__Users\chromedriver.exe__)

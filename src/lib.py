@@ -11,3 +11,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import matplotlib.pyplot as plt
 import seaborn as sns
+from wordcloud import WordCloud,STOPWORDS
+from wordcloud import ImageColorGenerator
+from PIL import Image
+from konlpy.tag import Komoran
+import nltk
