@@ -139,8 +139,6 @@ if __name__ == '__main__':
     지 당최 이해...
     '''
 
-
-
     text_df = pd.DataFrame(data['내용'])
     text_data = str(np.array(text_df['내용'].tolist()))
     stop = set()
