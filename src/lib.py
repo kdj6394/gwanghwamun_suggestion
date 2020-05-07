@@ -14,5 +14,5 @@ import seaborn as sns
 from wordcloud import WordCloud,STOPWORDS
 from wordcloud import ImageColorGenerator
 from PIL import Image
-from konlpy.tag import Komoran
+from konlpy.tag import *
 import nltk
