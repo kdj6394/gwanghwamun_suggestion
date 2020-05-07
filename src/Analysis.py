@@ -167,7 +167,7 @@ if __name__ == '__main__':
     plt.imshow(word,interpolation="bilinear")
     plt.draw()
     fig = plt.gcf()
-#     fig.savefig(join(img_save_root,'all_word_cloud.png'),dpi=fig.dpi)
+    fig.savefig(join(img_save_root,'all_word_cloud.png'),dpi=fig.dpi)
 
 
     division_word_cloud = join(img_save_root,'division_word_cloud')
