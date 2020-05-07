@@ -10,8 +10,7 @@ def Time_convert():
 
 if __name__ == '__main__':
     driver_path = sys.argv[1]
-    save_path = join(dirname(driver_path),'data')
-    os.makedirs(save_path,exist_ok=True)
+    save_path = sys.argv[2]
     save_file = join(save_path,str(Time_convert()) + '_data.txt')
 
     driver = webdriver.Chrome(driver_path)
