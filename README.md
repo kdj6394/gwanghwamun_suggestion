@@ -14,7 +14,13 @@
 * Crawling
     1. driver_path : __Users\chromedriver.exe__
     2. data_save_path : __Users\data__
+
+    
 * Analysis_path
+    1. root : __Users\data__ (folder)
+
+
+* word_cloud_path : 
     1. root : __Users\data__ (folder)
     2. img_path : __Users\setting\img__ (jpg,png ..)
     3. font_path : __Users\setting\font__ (tiff)
