@@ -76,8 +76,8 @@ if __name__ == '__main__':
         text_data = text_data.vocab().most_common(1000)
         text_data = dict(text_data)
 
-        make_word(font_path,text_data)
-        fig.savefig(join(division_word_cloud,x+'_word_cloud.png'),dpi=fig.dpi)
+        division_fig = make_word(font_path,text_data)
+        division_fig.savefig(join(division_word_cloud,x+'_word_cloud.png'),dpi=fig.dpi)
 
 
 
@@ -101,5 +101,5 @@ if __name__ == '__main__':
         text_data = text_data.vocab().most_common(1000)
         text_data = dict(text_data)
 
-        make_word(font_path,text_data)
-        fig.savefig(join(date_word_cloud_path,x+'_word_cloud.png'),dpi=fig.dpi)
+        date_fig = make_word(font_path,text_data)
+        date_fig.savefig(join(date_word_cloud_path,x+'_word_cloud.png'),dpi=fig.dpi)
