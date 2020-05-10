@@ -1,4 +1,4 @@
-# Gwanghwamun_Suggestion
+# gwanghwamun_suggestion
 ## 개요
 * 청와대 국민청원 :  문재인 정부 출범 이후 청와대 웹사이트에서 국민이 청원을 제시하여 SNS 계정으로 로그인한 20만 명의 추천을 받으면 책임자가 답변을 하는 제도이다. 이 제도에서 등장하고 토론한 안건을 살펴본다.
 
@@ -7,7 +7,7 @@
 2. 데이터의 분석(통계 및 시각화)
 
 ### requirements
-* pip install -r requirements.txt (업데이트예정)
+* pip install -r requirements.txt 
 * KoNLPy - 설치참고(https://konlpy.org/ko/latest/install/)
 
 ### path

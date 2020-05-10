@@ -76,7 +76,7 @@
 특히나 이후 청원횟수가 20회 이상인 날의 word_cloud 의 경우 다른특이점을 보이지 않으나 2020-02-26의 word_cloud에서부터 코로나,마스크가 등장하기 시작한다.
 * ![이미지](https://github.com/kdj6394/Gwanghwamun_Suggestion/blob/master/src/img/date_word_cloud/2020-02-26_word_cloud.png?raw=true)
 
-2020-03-31,2020-04-01 은 마스크,약국,취약,계층,구매,시간,배달 등의 단어로 미루어보아 코로나에 관한 여러 국민의 고충이 담겨짐을 알수있다.
+2020-03-31,2020-04-01 은 마스크,약국,취약,계층,구매,시간,배달 등의 단어로 미루어보아 코로나의 여파임 알수있다.
 * ![이미지](https://github.com/kdj6394/Gwanghwamun_Suggestion/blob/master/src/img/date_word_cloud/2020-03-31_word_cloud.png?raw=true)
 
 * ![이미지](https://github.com/kdj6394/Gwanghwamun_Suggestion/blob/master/src/img/date_word_cloud/2020-04-01_word_cloud.png?raw=true)
