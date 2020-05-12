@@ -25,6 +25,10 @@
     2. img_path : __Users\setting\img__ (jpg,png ..)
     3. font_path : __Users\setting\font__ (tiff)
 
+
+* word2vec_path :
+    1. root : __Users\data__ (folder) 업데이트 예정
+
 ## 데이터출처
 * 광화문1번가(https://www.gwanghwamoon1st.go.kr/front/main/index.do)
 * 정책제안 -> 혁신제안톡 -> 전체
