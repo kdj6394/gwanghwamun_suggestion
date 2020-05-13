@@ -11,6 +11,7 @@ import re
 from tqdm import tqdm,trange
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import seaborn as sns
@@ -20,4 +21,6 @@ from PIL import Image
 from konlpy.tag import *
 import nltk
 from gensim.models import word2vec
-from sklearn.cluster import DBSCAN
+from sklearn.cluster import DBSCAN,KMeans
+import warnings
+from sklearn.manifold import TSNE
