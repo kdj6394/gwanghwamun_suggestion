@@ -97,11 +97,11 @@ if __name__ == '__main__':
     data.columns = ['구분','진행상황','생성날짜','ID','좋아요수','제목','내용']
 
 
-    # title_data = data['제목']
-    # title = list(title_data)
-    # title_model = make_vec_model(title,save_root,'title',window_int=3,min_cnt=8)
-    # title_df = kmeans(title_model,num_clusters=7)
-    # title_fig = plot_scatter(title_df,font_path,'Title')
+    title_data = data['제목']
+    title = list(title_data)
+    title_model = make_vec_model(title,save_root,'title',window_int=3,min_cnt=8)
+    title_df = kmeans(title_model,num_clusters=7)
+    title_fig = plot_scatter(title_df,font_path,'Title')
 
 
     text_data = data['내용']
