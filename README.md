@@ -27,7 +27,8 @@
 
 
 * word2vec_path :
-    1. root : __Users\data__ (folder) 업데이트 예정
+    1. root : __Users\data__ (folder)
+    2. font_path : __Users\setting\font__ (tiff)
 
 ## 데이터출처
 * 광화문1번가(https://www.gwanghwamoon1st.go.kr/front/main/index.do)

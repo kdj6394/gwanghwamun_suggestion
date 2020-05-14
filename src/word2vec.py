@@ -1,12 +1,13 @@
 from lib import os,glob,sys,tqdm
 from lib import join,basename,dirname
-from lib import pd,np,re,plt,fm,openpyxl
+from lib import pd,np,re,plt,fm,openpyxl,sns
 from lib import warnings
 warnings.filterwarnings(action='ignore')
 from lib import Okt,word2vec,DBSCAN,KMeans
 from lib import TSNE,matplotlib
 
-def make_vec_model(data,save_root,data_name : str,min_cnt : int):
+
+def make_vec_model(data,save_root,data_name : str,window_int : int,min_cnt : int):
     okt = Okt()
     result = []
     for line in tqdm(data):
@@ -14,7 +15,8 @@ def make_vec_model(data,save_root,data_name : str,min_cnt : int):
         r = []
         for word in malist:
             if not word[1] in ['Josa','Eomi','Punctuation']:
-                r.append(word[0])
+                if len(word[0]) > 1:
+                    r.append(word[0])
         rl = (' '.join(r))
         result.append(rl)
     
@@ -23,16 +25,17 @@ def make_vec_model(data,save_root,data_name : str,min_cnt : int):
         f.write("\n".join(result))
     
     wData = word2vec.LineSentence(data_save_path)
-    wModel =word2vec.Word2Vec(wData, size=100, window=5, workers=4 ,min_count=min_cnt, sg=1)
+    wModel =word2vec.Word2Vec(wData, size=100, window=window_int, workers=4 ,min_count=min_cnt, sg=1)
     wModel.save(data_save_path+'.model')
     model = word2vec.Word2Vec.load(data_save_path+'.model')
+
     return model
 
-def kmeans_clustering(model,div_int:int):
+
+def kmeans(model,div_int : int):
     word_vectors = model.wv.syn0
     num_clusters = int(word_vectors.shape[0]/div_int)
-    print(num_clusters)
-    num_clusters = int(num_clusters)
+    print('num_clusters :',num_clusters)
 
     kmeans_clustering = KMeans(n_clusters=num_clusters)
     idx = kmeans_clustering.fit_predict(word_vectors)
@@ -41,37 +44,49 @@ def kmeans_clustering(model,div_int:int):
     names = model.wv.index2word
     word_centroid_map = {names[i]: idx[i] for i in range(len(names))}
 
+    cluster_dict = dict()
     for c in range(num_clusters):
-        print("\ncluster {}".format(c))
         words_list = list()
         cluster_values = list(word_centroid_map.values())
         for i in range(len(cluster_values)):
             if (cluster_values[i] == c):
                 words_list.append(list(word_centroid_map.keys())[i])            
-        print(words_list)
+        for w in words_list:
+            cluster_dict[w] = c
 
     vocab = list(model.wv.vocab)
     X = model[vocab]
-    tsne = TSNE(n_components=2)
+    print('vocab :',len(vocab))
+    # tsne = TSNE(n_components=2,perplexity=40,init='pca')
+    tsne = TSNE(n_components=2,perplexity=40)
     X_tsne = tsne.fit_transform(X)
     df = pd.DataFrame(X_tsne, index=vocab, columns=["x", "y"])
+    df['cluster'] = np.nan
+    for v in vocab:
+        df.ix[v,'cluster'] = cluster_dict[v]
+
     return df
 
-def plot_scatter(df,font_path):
+
+def plot_scatter(df,font_path,plt_title : str):
+    ax = sns.scatterplot(x='x', y='y',hue='cluster',s=90,data=df)
     prop = fm.FontProperties(fname=font_path)
-    matplotlib.rcParams["axes.unicode_minus"] = False
-    fig = plt.figure(figsize=(15,8))
-    ax = fig.add_subplot(1, 1, 1)
-    ax.scatter(df["x"], df["y"])
     for word, pos in list(df.iterrows()):
-        ax.annotate(word, pos, fontsize=10,fontproperties=prop,textcoords='offset points')
+        annotate_coords = (pos['x'],pos['y'])
+        ax.annotate(word, annotate_coords , fontsize=10, fontproperties=prop)
+
+    ax.legend(fontsize=10,loc='upper left')
+    plt.title('Title',fontsize=20)
+    plt.grid()
     plt.show()
 
+
 if __name__ == '__main__':
-    root = r'C:\Users\82104\Documents\GitHub\Gwanghwamun_Suggestion\data'
-    font_path = r'C:\Users\82104\Documents\GitHub\Gwanghwamun_Suggestion\setting\NanumSquareRoundL.ttf'
-    # root = r'C:\ProgramData\Anaconda3\kdj\Git\Gwanghwamun_Suggestion\data'
-    # font_path = r'C:\ProgramData\Anaconda3\kdj\Git\Gwanghwamun_Suggestion\setting\NanumSquareRoundL.ttf'
+    # root = r'C:\Users\82104\Documents\GitHub\Gwanghwamun_Suggestion\data'
+    # font_path = r'C:\Users\82104\Documents\GitHub\Gwanghwamun_Suggestion\setting\NanumSquareRoundL.ttf'
+
+    root = r'C:\ProgramData\Anaconda3\kdj\Git\Gwanghwamun_Suggestion\data'
+    font_path = r'C:\ProgramData\Anaconda3\kdj\Git\Gwanghwamun_Suggestion\setting\NanumSquareRoundL.ttf'
 
     save_root = join(dirname(root),'src','word2vec')
     os.makedirs(save_root,exist_ok=True)
@@ -80,9 +95,17 @@ if __name__ == '__main__':
     data = pd.read_csv(data_path,sep='\t',header=None,encoding='utf8')
     data.columns = ['구분','진행상황','생성날짜','ID','좋아요수','제목','내용']
 
-    text_data = data['제목']
-    title = list(text_data)
 
-    model = make_vec_model(title,save_root,'title',14)
-    df = kmeans_clustering(model,30)
-    plot_scatter(df,font_path)
+    title_data = data['제목']
+    title = list(title_data)
+    title_model = make_vec_model(title,save_root,'title',window_int=3,min_cnt=8)
+    title_df = kmeans(title_model,50)
+    plot_scatter(title_df,font_path,'title')
+
+    text_data = data['내용']
+    text = list(text_data)
+    text_model = make_vec_model(text,save_root,'text',window_int=5,min_cnt=70)
+    text_df = kmeans(text_model,100)
+    plot_scatter(text_df,font_path,'text')
+
+    ''' requirements update'''
