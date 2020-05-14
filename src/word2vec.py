@@ -32,10 +32,8 @@ def make_vec_model(data,save_root,data_name : str,window_int : int,min_cnt : int
     return model
 
 
-def kmeans(model,div_int : int):
+def kmeans(model,num_clusters : int):
     word_vectors = model.wv.syn0
-    num_clusters = int(word_vectors.shape[0]/div_int)
-    print('num_clusters :',num_clusters)
 
     kmeans_clustering = KMeans(n_clusters=num_clusters)
     idx = kmeans_clustering.fit_predict(word_vectors)
@@ -56,15 +54,17 @@ def kmeans(model,div_int : int):
 
     vocab = list(model.wv.vocab)
     X = model[vocab]
-    print('vocab :',len(vocab))
-    # tsne = TSNE(n_components=2,perplexity=40,init='pca')
-    tsne = TSNE(n_components=2,perplexity=40)
+    print('num_clusters =',num_clusters,'vocab =',len(vocab))
+    tsne = TSNE(n_components=2,perplexity=40,init='pca')
+    # tsne = TSNE(n_components=2,perplexity=40)
     X_tsne = tsne.fit_transform(X)
     df = pd.DataFrame(X_tsne, index=vocab, columns=["x", "y"])
     df['cluster'] = np.nan
     for v in vocab:
-        df.ix[v,'cluster'] = cluster_dict[v]
+        df.loc[str(v),'cluster'] = cluster_dict[v]
 
+    print(df)
+    print('='*50)
     return df
 
 
@@ -73,7 +73,7 @@ def plot_scatter(df,font_path,plt_title : str):
     prop = fm.FontProperties(fname=font_path)
     for word, pos in list(df.iterrows()):
         annotate_coords = (pos['x'],pos['y'])
-        ax.annotate(word, annotate_coords , fontsize=10, fontproperties=prop)
+        ax.annotate(word, annotate_coords , fontsize=9, fontproperties=prop)
 
     ax.legend(fontsize=10,loc='upper left')
     plt.title(plt_title,fontsize=20)
@@ -82,12 +82,13 @@ def plot_scatter(df,font_path,plt_title : str):
 
 
 if __name__ == '__main__':
-    # root = r'C:\Users\82104\Documents\GitHub\Gwanghwamun_Suggestion\data'
-    # font_path = r'C:\Users\82104\Documents\GitHub\Gwanghwamun_Suggestion\setting\NanumSquareRoundL.ttf'
-
-    root = r'C:\ProgramData\Anaconda3\kdj\Git\Gwanghwamun_Suggestion\data'
-    font_path = r'C:\ProgramData\Anaconda3\kdj\Git\Gwanghwamun_Suggestion\setting\NanumSquareRoundL.ttf'
-
+    root = r'C:\Users\82104\Documents\GitHub\Gwanghwamun_Suggestion\data'
+    font_path = r'C:\Users\82104\Documents\GitHub\Gwanghwamun_Suggestion\setting\NanumSquareRoundL.ttf'
+    
+    # root = r'C:\ProgramData\Anaconda3\kdj\Git\Gwanghwamun_Suggestion\data'
+    # font_path = r'C:\ProgramData\Anaconda3\kdj\Git\Gwanghwamun_Suggestion\setting\NanumSquareRoundL.ttf'
+    
+    img_save_root = join(dirname(root),'src','img')
     save_root = join(dirname(root),'src','word2vec')
     os.makedirs(save_root,exist_ok=True)
 
@@ -99,13 +100,12 @@ if __name__ == '__main__':
     # title_data = data['제목']
     # title = list(title_data)
     # title_model = make_vec_model(title,save_root,'title',window_int=3,min_cnt=8)
-    # title_df = kmeans(title_model,40)
-    # plot_scatter(title_df,font_path,'Title')
+    # title_df = kmeans(title_model,num_clusters=7)
+    # title_fig = plot_scatter(title_df,font_path,'Title')
+
 
     text_data = data['내용']
     text = list(text_data)
     text_model = make_vec_model(text,save_root,'text',window_int=5,min_cnt=70)
-    text_df = kmeans(text_model,50)
-    plot_scatter(text_df,font_path,'Text')
-
-    ''' requirements update'''
+    text_df = kmeans(text_model,num_clusters=14)
+    text_fig = plot_scatter(text_df,font_path,'Text')
