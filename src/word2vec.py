@@ -76,7 +76,7 @@ def plot_scatter(df,font_path,plt_title : str):
         ax.annotate(word, annotate_coords , fontsize=10, fontproperties=prop)
 
     ax.legend(fontsize=10,loc='upper left')
-    plt.title('Title',fontsize=20)
+    plt.title(plt_title,fontsize=20)
     plt.grid()
     plt.show()
 
@@ -96,16 +96,16 @@ if __name__ == '__main__':
     data.columns = ['구분','진행상황','생성날짜','ID','좋아요수','제목','내용']
 
 
-    title_data = data['제목']
-    title = list(title_data)
-    title_model = make_vec_model(title,save_root,'title',window_int=3,min_cnt=8)
-    title_df = kmeans(title_model,50)
-    plot_scatter(title_df,font_path,'title')
+    # title_data = data['제목']
+    # title = list(title_data)
+    # title_model = make_vec_model(title,save_root,'title',window_int=3,min_cnt=8)
+    # title_df = kmeans(title_model,40)
+    # plot_scatter(title_df,font_path,'Title')
 
     text_data = data['내용']
     text = list(text_data)
     text_model = make_vec_model(text,save_root,'text',window_int=5,min_cnt=70)
-    text_df = kmeans(text_model,100)
-    plot_scatter(text_df,font_path,'text')
+    text_df = kmeans(text_model,50)
+    plot_scatter(text_df,font_path,'Text')
 
     ''' requirements update'''
