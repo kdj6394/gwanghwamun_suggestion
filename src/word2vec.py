@@ -32,9 +32,10 @@ def make_vec_model(data,save_root,data_name : str,window_int : int,min_cnt : int
     return model
 
 
-def kmeans(model,num_clusters : int):
+def kmeans(model,num_cluster : int):
+    num_cluster = num_cluster
     word_vectors = model.wv.syn0
-    kmeans_clustering = KMeans(n_clusters=num_clusters)
+    kmeans_clustering = KMeans(n_clusters=num_cluster)
     idx = kmeans_clustering.fit_predict(word_vectors)
     idx = list(idx)
 
@@ -42,7 +43,7 @@ def kmeans(model,num_clusters : int):
     word_centroid_map = {names[i]: idx[i] for i in range(len(names))}
     cluster_dict = dict()
 
-    for c in range(num_clusters):
+    for c in range(num_cluster):
         words_list = list()
         cluster_values = list(word_centroid_map.values())
         for i in range(len(cluster_values)):
@@ -53,26 +54,21 @@ def kmeans(model,num_clusters : int):
 
     vocab = list(model.wv.vocab)
     X = model[vocab]
-    print('num_clusters =',num_clusters,' , ','vocab =',len(vocab))
+    print('num_cluster =',num_cluster,' , ','vocab =',len(vocab))
 
-    # tsne = TSNE(n_components=2,perplexity=40,init='pca')
-    tsne = TSNE(n_components=2,perplexity=40,init='random')
+    tsne = TSNE(n_components=2,perplexity=40,init='pca')
+    # tsne = TSNE(n_components=2,perplexity=40,init='random')
     X_tsne = tsne.fit_transform(X)
     df = pd.DataFrame(X_tsne, index=vocab, columns=["x", "y"])
     df['cluster'] = np.nan
     for v in vocab:
         df.loc[str(v),'cluster'] = cluster_dict[v]
 
-    return df
+    return df,num_cluster
 
 
 def plot_scatter(df,cluster_cnt : int,font_path,plt_title : str):
     prop = fm.FontProperties(fname=font_path)
-    ax = sns.scatterplot(x='x', y='y',hue='cluster',s=30,data=df)
-    for word, pos in list(df.iterrows()):
-        annotate_coords = (pos['x'],pos['y'])
-        ax.annotate(word, annotate_coords , fontsize=11, fontproperties=prop)
-
     cluster_df = df.groupby(df['cluster'])
     cluster_mean = cluster_df.mean()
     cluster_mean['cluster'] = np.nan
@@ -80,22 +76,27 @@ def plot_scatter(df,cluster_cnt : int,font_path,plt_title : str):
     for i in range(0,cluster_cnt):
         cluster_mean.loc[i,'cluster'] = i
 
-    ax = sns.scatterplot(x='x', y='y',hue='cluster',s=200,data=cluster_mean)
+    ax1 = sns.scatterplot(x='x', y='y',hue='cluster',s=30,data=df)
+    for word, pos in list(df.iterrows()):
+        annotate_coords = (pos['x'],pos['y'])
+        ax1.annotate(word, annotate_coords , fontsize=11, fontproperties=prop)
+
+    ax1 = sns.scatterplot(x='x', y='y',s=200,hue='cluster',data=cluster_mean)
     for index, pos in list(cluster_mean.iterrows()):
         annotate_coords = (pos['x'],pos['y'])
-        ax.annotate('Cluster' +'_'+ str(index), annotate_coords, fontsize = 11, fontproperties=prop,color='red')
+        ax1.annotate('Cluster' +'_'+ str(index), annotate_coords, fontsize = 11, fontproperties=prop)
 
-    ax.legend(fontsize=10,loc='upper left')
+    ax1.legend_.remove()
     plt.title(plt_title,fontsize=24)
     plt.show()
 
 
 if __name__ == '__main__':
-    # root = r'C:\Users\82104\Documents\GitHub\Gwanghwamun_Suggestion\data'
-    # font_path = r'C:\Users\82104\Documents\GitHub\Gwanghwamun_Suggestion\setting\NanumSquareRoundL.ttf'
+    root = r'C:\Users\82104\Documents\GitHub\Gwanghwamun_Suggestion\data'
+    font_path = r'C:\Users\82104\Documents\GitHub\Gwanghwamun_Suggestion\setting\NanumSquareRoundL.ttf'
     
-    root = r'C:\ProgramData\Anaconda3\kdj\Git\Gwanghwamun_Suggestion\data'
-    font_path = r'C:\ProgramData\Anaconda3\kdj\Git\Gwanghwamun_Suggestion\setting\NanumSquareRoundL.ttf'
+    # root = r'C:\ProgramData\Anaconda3\kdj\Git\Gwanghwamun_Suggestion\data'
+    # font_path = r'C:\ProgramData\Anaconda3\kdj\Git\Gwanghwamun_Suggestion\setting\NanumSquareRoundL.ttf'
     
     img_save_root = join(dirname(root),'src','img')
     save_root = join(dirname(root),'src','word2vec')
@@ -106,15 +107,15 @@ if __name__ == '__main__':
     data.columns = ['구분','진행상황','생성날짜','ID','좋아요수','제목','내용']
 
 
-    title_data = data['제목']
-    title = list(title_data)
-    title_model = make_vec_model(title,save_root,'title',window_int=3,min_cnt=17)
-    title_df = kmeans(title_model,num_clusters=4)
-    plot_scatter(title_df,4,font_path,plt_title='Title')
+    # title_data = data['제목']
+    # title = list(title_data)
+    # title_model = make_vec_model(title,save_root,'title',window_int=3,min_cnt=17)
+    # title_df,title_num_cluster = kmeans(title_model,num_cluster=4)
+    # plot_scatter(title_df,title_num_cluster,font_path,plt_title='Title')
 
 
     text_data = data['내용']
     text = list(text_data)
     text_model = make_vec_model(text,save_root,'text',window_int=5,min_cnt=230)
-    text_df = kmeans(text_model,num_clusters=6)
-    plot_scatter(text_df,6,font_path,'Text')
+    text_df,text_num_cluster = kmeans(text_model,num_cluster=6)
+    plot_scatter(text_df,text_num_cluster,font_path,plt_title='Text')
