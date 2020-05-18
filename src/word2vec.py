@@ -92,11 +92,11 @@ def plot_scatter(df,cluster_cnt : int,font_path,plt_title : str):
 
 
 if __name__ == '__main__':
-    root = r'C:\Users\82104\Documents\GitHub\Gwanghwamun_Suggestion\data'
-    font_path = r'C:\Users\82104\Documents\GitHub\Gwanghwamun_Suggestion\setting\NanumSquareRoundL.ttf'
+    # root = r'C:\Users\82104\Documents\GitHub\Gwanghwamun_Suggestion\data'
+    # font_path = r'C:\Users\82104\Documents\GitHub\Gwanghwamun_Suggestion\setting\NanumSquareRoundL.ttf'
     
-    # root = r'C:\ProgramData\Anaconda3\kdj\Git\Gwanghwamun_Suggestion\data'
-    # font_path = r'C:\ProgramData\Anaconda3\kdj\Git\Gwanghwamun_Suggestion\setting\NanumSquareRoundL.ttf'
+    root = r'C:\ProgramData\Anaconda3\kdj\Git\Gwanghwamun_Suggestion\data'
+    font_path = r'C:\ProgramData\Anaconda3\kdj\Git\Gwanghwamun_Suggestion\setting\NanumSquareRoundL.ttf'
     
     img_save_root = join(dirname(root),'src','img')
     save_root = join(dirname(root),'src','word2vec')
@@ -107,11 +107,11 @@ if __name__ == '__main__':
     data.columns = ['구분','진행상황','생성날짜','ID','좋아요수','제목','내용']
 
 
-    # title_data = data['제목']
-    # title = list(title_data)
-    # title_model = make_vec_model(title,save_root,'title',window_int=3,min_cnt=17)
-    # title_df,title_num_cluster = kmeans(title_model,num_cluster=4)
-    # plot_scatter(title_df,title_num_cluster,font_path,plt_title='Title')
+    title_data = data['제목']
+    title = list(title_data)
+    title_model = make_vec_model(title,save_root,'title',window_int=3,min_cnt=17)
+    title_df,title_num_cluster = kmeans(title_model,num_cluster=4)
+    plot_scatter(title_df,title_num_cluster,font_path,plt_title='Title')
 
 
     text_data = data['내용']
