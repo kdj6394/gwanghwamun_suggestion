@@ -66,7 +66,7 @@ if __name__ == '__main__':
     situation_df_count = situation_df_count.sort_values(by=['목록횟수'], ascending = True).reset_index()
     fig = barh_plot(situation_df_count,'진행상황목록','목록횟수','red')
     fig.savefig(join(img_save_root,'진행상황별목록횟수.png'),dpi=fig.dpi)
-
+    
 
     date_df = pd.DataFrame(data['생성날짜'])
     unique_list = date_df['생성날짜'].unique()
@@ -83,6 +83,7 @@ if __name__ == '__main__':
     max_data = division_like_df.groupby(['구분'], as_index = False).max()
     max_data = max_data.rename(columns={'좋아요수' : 'max_like'})
     mean_max_data = pd.concat([mean_data,max_data['max_like']],axis=1)
+    print(mean_max_data)
 
     plt.figure(figsize=(15,8))
     plt.xlabel('구분',fontsize=15)

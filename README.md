@@ -43,7 +43,7 @@
 * 구분별 청원횟수
     1. 데이터의 구분목록(보건의료,공공행정,교육,기타 등...)을 추출하여 각 값을 count 후 그래프 생성
     2. ![이미지](https://github.com/kdj6394/Gwanghwamun_Suggestion/blob/master/src/img/%EA%B5%AC%EB%B6%84%EB%B3%84%EC%B2%AD%EC%9B%90%ED%9A%9F%EC%88%98.png?raw=true)
-    3. 확인결과 기타가 501로 가장 높으며, 다음으로 보건의료,공공행정,사회복지 등이 등장,가장 낮은 부분은 통일외교로 6건 밖에 해당하지 않음 
+    3. 확인결과 기타가 542로 가장 높으며, 다음으로 보건의료,공공행정,사회복지 등이 등장,가장 낮은 부분은 통일외교로 8건 밖에 해당하지 않음 
 
 
 * 진행상황별 목록
@@ -51,7 +51,7 @@
     2. ![이미지](https://github.com/kdj6394/Gwanghwamun_Suggestion/blob/master/src/img/%EC%A7%84%ED%96%89%EC%83%81%ED%99%A9%EB%B3%84%EB%AA%A9%EB%A1%9D%ED%9A%9F%EC%88%98.png?raw=true)
 
 * 생성날짜별 청원횟수
-    1. 데이터의 생성날짜(2018-10-30 ~ 2020-05-09)를 추출하여 각 값을 count 후 그래프 생성
+    1. 데이터의 생성날짜를 추출하여 각 값을 count 후 그래프 생성
     2. ![이미지](https://github.com/kdj6394/Gwanghwamun_Suggestion/blob/master/src/img/%EC%83%9D%EC%84%B1%EB%82%A0%EC%A7%9C%EB%B3%84%EC%B2%AD%EC%9B%90%ED%9A%9F%EC%88%98.png?raw=true)
     
     3. 청원횟수가 20회 이상인 날은 다음과 같다. 20회인 이상의경우 날짜별 word cloud 를 생성함. 
@@ -79,23 +79,23 @@
     4. 
         | 구분 | Mean | Max |
         |:----:|----:|----:|
-        |공공행정|      0.981|        40|
-        |과학기술|      0.722|        10|
-        |교육|          2.244|        29|
-        |교통물류|      2.158|        47|
-        |국토관리|      0.750|         4|
-        |기타|          2.665|       164|
-        |농축수산|      0.867|         5|
-        |문화관광|      9.900|        83|
-        |보건의료|     10.316|       757|
-        |사회복지|      6.045|       269|
-        |산업고용|      2.102|        42|
-        |식품건강|      2.933|        33|
-        |재난안전|      1.604|        40|
-        |재정금융|      1.310|        33|
-        |통일외교|      0.500|         1|
-        |환경기상|      1.070|         5| 
-    5. 각 구분별 word_cloud 도 생성함.
+        |공공행정|1.571|   40|
+        |과학기술|1.000|   10|
+        |교육|5.186|   51|
+        |교통물류|2.156|   47|
+        |국토관리|0.762|    4|
+        |기타|3.120|  164|
+        |농축수산|0.643|    5|
+        |문화관광|11.529|   83|
+        |보건의료|4.460|  163|
+        |사회복지|6.618|  269|
+        |산업고용|2.146|   42|
+        |식품건강|2.750|   33|
+        |재난안전|1.892|   40|
+        |재정금융|2.031|   33|
+        |통일외교|0.625|    1|
+        |환경기상|0.878|    5|
+    5. 각 구분별 word_cloud 를 생성함.
 
 ### word_cloud
 #### all_word_cloud 
@@ -121,3 +121,13 @@
 * ![이미지](https://github.com/kdj6394/Gwanghwamun_Suggestion/blob/master/src/img/division_word_cloud/%EA%B8%B0%ED%83%80_word_cloud.png?raw=true)
 * 가장 많은 구분항목인 __기타__ 에서 등장한 단어들은 위와 같다.
 * 눈에띄는 단어들은 국민,사회,이유,학생,미국,개선,정부,사람,주택 등 전반적인 사회정치 단어가 보인다.
+
+### word2vec
+
+#### title
+* ![이미지](https://github.com/kdj6394/gwanghwamun_suggestion/blob/master/src/img/word2vec_title.png?raw=true)
+* window_int=3,min_cnt=19,num_cluster=5
+
+#### text
+* ![이미지](https://github.com/kdj6394/gwanghwamun_suggestion/blob/master/src/img/word2vec_text.png?raw=true)
+* window_int=5,min_cnt=230,num_cluster=6
