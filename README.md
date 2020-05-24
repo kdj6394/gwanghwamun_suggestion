@@ -101,24 +101,24 @@
 #### all_word_cloud 
 * ![이미지](https://github.com/kdj6394/Gwanghwamun_Suggestion/blob/master/src/img/all_word_cloud.png?raw=true)
 
-* all_word_cloud 에서 보이는 주요 단어는 근로,소득,불로소득,재산,착취,사회,주택,재활용품 등이 먼저 눈에 들어온다.
+* all_word_cloud 에서 보이는 주요 단어는 어르신,부모님,제안,생각,운전,사회,음주,공무원,마음 등이 먼저 눈에 들어온다.
 
 ### date_word_cloud
 * ![이미지](https://github.com/kdj6394/Gwanghwamun_Suggestion/blob/master/src/img/date_word_cloud/2018-10-30_word_cloud.png?raw=true)
 
-* 제안하는 사이트가 정부혁신1번가 -> 광화문1번가로 바뀌면서 이전에 기록된 데이터들이 모드 2018-10-30 으로 이동한것으로 보인다.
-* 주요 키워드는 : 이유,국민,시설,지역,사회,참여,교육 등이 보인다.
+* 제안하는 사이트가 정부혁신1번가 -> 광화문1번가로 바뀌면서 이전에 기록된 데이터들이 모두 2018-10-30 으로 이동한것으로 보인다.
+* 주요 키워드는 : 이유,국민,시설,청년,정부,교육 등이 보인다.
 
-특히나 이후 청원횟수가 20회 이상인 날의 word_cloud 의 경우 다른특이점을 보이지 않으나 2020-02-26의 word_cloud에서부터 코로나,마스크가 등장하기 시작한다.
-* ![이미지](https://github.com/kdj6394/Gwanghwamun_Suggestion/blob/master/src/img/date_word_cloud/2020-02-26_word_cloud.png?raw=true)
-
-2020-03-31,2020-04-01 은 마스크,약국,취약,계층,구매,시간,배달 등의 단어로 미루어보아 코로나의 여파임 알수있다.
+특히나 이후 청원횟수가 20회 이상인 날의 word_cloud 의 경우 다른특이점을 보이지 않으나 2020-03-31의 word_cloud에서부터 코로나,마스크가 등장하기 시작한다.
 * ![이미지](https://github.com/kdj6394/Gwanghwamun_Suggestion/blob/master/src/img/date_word_cloud/2020-03-31_word_cloud.png?raw=true)
+
+2020-04-01 은 마스크,약국,취약,계층,구매,시간,배달 등의 단어로 미루어보아 코로나의 여파임 알수있다.
 
 * ![이미지](https://github.com/kdj6394/Gwanghwamun_Suggestion/blob/master/src/img/date_word_cloud/2020-04-01_word_cloud.png?raw=true)
 
 ### division_word_cloud
 * ![이미지](https://github.com/kdj6394/Gwanghwamun_Suggestion/blob/master/src/img/division_word_cloud/%EA%B8%B0%ED%83%80_word_cloud.png?raw=true)
+
 * 가장 많은 구분항목인 __기타__ 에서 등장한 단어들은 위와 같다.
 * 눈에띄는 단어들은 국민,사회,이유,학생,미국,개선,정부,사람,주택 등 전반적인 사회정치 단어가 보인다.
 
