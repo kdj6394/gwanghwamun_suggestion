@@ -1,6 +1,8 @@
 from lib import os,glob,sys,join,basename,dirname
 from lib import np,pd,plt,sns
 plt.rc('font',family='Malgun Gothic')
+from lib import warnings
+warnings.filterwarnings(action='ignore')
 
 def barh_plot(data,x:str,y:str,str_color:str):
     plt.figure(figsize=(15,8))

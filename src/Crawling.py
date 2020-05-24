@@ -29,16 +29,19 @@ if __name__ == '__main__':
     for i in tqdm(range(0,int(last_page_index/10)),desc='Crawling'):
         for x in range(1,11):
             x_page = '#list_div > p.paging.web_only > span > a:nth-child({})'.format(x)
-            if x == 10:
-                driver.find_elements_by_css_selector(x_page)[0].click()
-                time.sleep(1)
-                next_page = driver.find_element_by_xpath('//*[@id="list_div"]/p[1]/button[3]')
-                next_page.click()
-                time.sleep(1)
-            else:
-                time.sleep(1)
-                driver.find_elements_by_css_selector(x_page)[0].click()
-                time.sleep(1)
+            try:
+                if x == 10:
+                    driver.find_elements_by_css_selector(x_page)[0].click()
+                    time.sleep(1)
+                    next_page = driver.find_element_by_xpath('//*[@id="list_div"]/p[1]/button[3]')
+                    next_page.click()
+                    time.sleep(1)
+                else:
+                    time.sleep(1)
+                    driver.find_elements_by_css_selector(x_page)[0].click()
+                    time.sleep(1)
+            except:
+                pass
 
             html = driver.page_source
             soup = bs(html,'html.parser')

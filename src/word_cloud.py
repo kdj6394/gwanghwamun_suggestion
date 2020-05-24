@@ -3,6 +3,8 @@ from lib import np,pd,plt
 plt.rc('font',family='Malgun Gothic')
 from lib import WordCloud,Image,ImageColorGenerator,Komoran,nltk
 from lib import Okt
+from lib import warnings
+warnings.filterwarnings(action='ignore')
 
 def make_mask_word(img_path,font_path,data,str_color):
     img_mask = np.array(Image.open(img_path))
@@ -82,8 +84,10 @@ if __name__ == '__main__':
 
 
     date_text_df = pd.DataFrame(data[['생성날짜','내용']])
-    for_date_list = ['2018-10-30','2019-03-04','2019-03-05','2019-03-30','2019-04-30','2019-10-10',
-                '2019-10-11','2019-11-21','2020-02-26','2020-03-31','2020-04-01','2020-04-04','2020-05-06']
+    check_date_text_df = date_text_df['생성날짜'].value_counts()
+    print(check_date_text_df)
+    for_date_list = ['2020-04-01','2018-10-30','2019-03-04','2019-04-30','2019-03-05','2020-03-31',
+                    '2019-11-21','2019-03-30','2019-10-10','2020-04-04','2019-10-11','2019-11-07','2019-11-20']
 
     date_word_cloud_path = join(img_save_root,'date_word_cloud')
     os.makedirs(date_word_cloud_path,exist_ok=True)
@@ -102,4 +106,4 @@ if __name__ == '__main__':
         text_data = dict(text_data)
 
         date_fig = make_word(font_path,text_data)
-        date_fig.savefig(join(date_word_cloud_path,x+'_word_cloud.png'),dpi=fig.dpi)
+        date_fig.savefig(join(date_word_cloud_path,x+'_word_cloud.png'),dpi=date_fig.dpi)
