@@ -3,8 +3,11 @@
 * 청와대 국민청원 :  문재인 정부 출범 이후 청와대 웹사이트에서 국민이 청원을 제시하여 SNS 계정으로 로그인한 20만 명의 추천을 받으면 책임자가 답변을 하는 제도이다. 이 제도에서 등장하고 토론한 안건을 살펴본다.
 
 ## 순서
-1. 데이터의 수집(크롤링 및 저장)
-2. 데이터의 분석(통계 및 시각화)
+1. 데이터 수집(크롤링 및 저장)
+2. 데이터 분석
+    * 통계
+    * word cloud
+    * word to vec (k-mean cluster)
 
 ### requirements
 * pip install -r requirements.txt 
@@ -37,7 +40,7 @@
 ## Report
 ### data
 1. 데이터는 crawling 된 데이터를 사용함.
-2. crawling 시각은 2020-05-24,18-09 을 기준으로 함.
+2. crawling 시각은 2020-05-24,18-09 을 기준으로 분석,시각화를 진행함.
 
 ### analysis
 * 구분별 청원횟수
@@ -127,7 +130,9 @@
 #### title
 * ![이미지](https://github.com/kdj6394/gwanghwamun_suggestion/blob/master/src/img/word2vec_title.png?raw=true)
 * window_int=3,min_cnt=19,num_cluster=5
+* 대체적으로 의미있는 단어끼리 군집화가 잘 이루어진것으로보인다.
 
 #### text
 * ![이미지](https://github.com/kdj6394/gwanghwamun_suggestion/blob/master/src/img/word2vec_text.png?raw=true)
 * window_int=5,min_cnt=230,num_cluster=6
+* 단어의 의미는 서로 군집화가 잘이루어졌으나, title 에 비해 많은양의 단어로 인해 만은차원의 생성, 그리고 차원축소의 과정에서 한눈에 알아보기 힘든 img 이다.
