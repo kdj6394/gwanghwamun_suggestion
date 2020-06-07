@@ -34,7 +34,6 @@ def plot(data,x:str,y:str,str_color:str):
         horizontalalignment = 'left',verticalalignment = 'center',fontweight = 'bold')
     plt.draw()
     fig = plt.gcf()
-    fig.savefig(join(img_save_root,'생성날짜별청원횟수.png'),dpi=fig.dpi)
     return fig
 
 
